@@ -1,5 +1,5 @@
-# Tapewatch surveillance methodology — v0.1 (DRAFT for Kaï's edit)
-July 5, 2026 · Status: draft assembled by Claude; every threshold, weight, and definition below is a placeholder until Kaï signs off. This becomes memory/semantic/methodology.md after edit.
+# Tapewatch surveillance methodology — v0.1 (SUPERSEDED — kept as draft record)
+July 5, 2026 · Status: superseded by memory/semantic/methodology.md (v0.2, 2026-07-06). Do not cite thresholds or definitions from this file; it is retained only as the v0.1 draft record.
 
 Legal posture (governs everything): research publication, not investment advice. Analysis is impersonal — pools, not portfolios. Findings are facts plus methodology-based opinions. No statements about anyone's intent. Grades describe observable structure and disclosure, not predictions of default.
 
