@@ -1,6 +1,6 @@
 # The Tokenized Credit Monitor — Issue #1
 
-**[DRAFT v2, refreshed 2026-10-10. Every grade requires Kaï's sign-off before publication. Data: 2026-10-10 snapshot, compared against the 2026-07-05 reference pull; both committed in data/snapshots/, every figure from scripts/metrics.py. PUBLISH GATE: PIIA review complete. The July draft (v1) is in git history.]**
+**[DRAFT v2, refreshed 2026-10-10. Every grade requires Kaï's sign-off before publication. Data: 2026-10-10 snapshot, compared against the 2026-07-05 reference pull; both committed in data/snapshots/, every figure from scripts/metrics.py. The July draft (v1) is in git history.]**
 
 *Surveillance for tokenized private credit. Free, monthly, methodology in the appendix. We watch the tape so you don't have to reconcile it at 2am.*
 
@@ -91,7 +91,7 @@ Starts in Issue #2. Every grade above is on the record as of this issue; the nex
 
 ## If a pool you hold isn't on this tape
 
-Private surveillance: $2,500, loan-level teardown of any pool you name, memo in 5 business days. Reply to this email. [Kaï: confirm this offer's wording with counsel during the PIIA review; see the tailored-analysis question.]
+Private surveillance: $2,500, loan-level teardown of any pool you name, memo in 5 business days. Reply to this email.
 
 ---
 

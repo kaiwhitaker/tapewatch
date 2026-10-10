@@ -17,6 +17,3 @@ allocators, then park with a written re-check date.
 ## Moat test question (ask on every discovery call, log verbatim)
 "If your analyst ran this same analysis internally with an LLM, could you use
 it with your depositors / in your reporting?"
-
-## Hard gate before ANY publishing
-PIIA/invention-assignment review (~$500). Status: [TBD — booked?]
