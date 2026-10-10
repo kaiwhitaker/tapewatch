@@ -23,3 +23,14 @@
   cite when framing WATCH as structure-not-solvency.
 
 ## Balancer exploit (Nov 3, 2025) — ~$128M. Contagion vector into Stream loss.
+
+## Goldfinch Prime wind-down (June 2026)
+- GIP-87 passed (token-holder vote, June 2026): Goldfinch to maintenance mode,
+  Prime wound down, existing Prime investors fully redeemed; $150K USDC to
+  Warbler Labs for wind-down services. A trust under a chief restructuring
+  officer pursues recoveries on legacy borrower pools.
+- Legacy pools: ~$56M outstanding against ~$1.6M TVL per DefiLlama as cited
+  by secondary coverage (single-source; verify before using in a verdict).
+- Sources: gov.goldfinch.finance GIP-87 thread (primary); The Block, June 2026.
+- Why it matters to us: Goldfinch Prime was on the Issue #1 tape (July draft,
+  $37M). It exits in Issue #1's tape-changes note.

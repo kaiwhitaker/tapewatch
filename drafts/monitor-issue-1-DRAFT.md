@@ -1,6 +1,6 @@
 # The Tokenized Credit Monitor — Issue #1
 
-**[DRAFT v2, refreshed 2026-10-10. Every grade requires Kaï's sign-off before publication. Data: 2026-10-10 snapshot, compared against the 2026-07-05 reference pull; both committed in data/snapshots/, every figure from scripts/metrics.py. The July draft (v1) is in git history.]**
+**[DRAFT v2, refreshed 2026-10-10. Grades signed off by Kaï on 2026-10-10. Open before publishing: the AUSD row. Data: 2026-10-10 snapshot, compared against the 2026-07-05 reference pull; both committed in data/snapshots/, every figure from scripts/metrics.py. The July draft (v1) is in git history.]**
 
 *Surveillance for tokenized private credit. Free, monthly, methodology in the appendix. We watch the tape so you don't have to reconcile it at 2am.*
 
@@ -16,30 +16,32 @@ Eleven months after Stream Finance, the structural pattern that turned a $93M lo
 - **What this is not:** Stream. Maple's book is overcollateralized institutional lending with published delegates, and Maple exited its own DeFi lending positions within 24 hours of the April 18 rsETH incident. The risk process demonstrably works. This is a structure observation, not a solvency observation.
 - **Why it still matters:** rehypothecated supply means redemption behavior is partly governed by liquidation engines Maple doesn't control. In stress, about a fifth of the book unwinds on Aave's and Morpho's parameters, not on Maple's withdrawal queue. Nobody publishes that consolidated exposure. That's the gap this Monitor exists to fill.
 
-**Draft grade: WATCH.** Not for credit quality: the consolidated rehypothecation footprint is unmonitored by anyone, as far as public disclosure shows, and it is growing as a share of the book. [Kaï: sign off / soften / sharpen.]
+**Grade: WATCH.** Not for credit quality: the consolidated rehypothecation footprint is unmonitored by anyone, as far as public disclosure shows, and it is growing as a share of the book.
 
 ---
 
-## The tape: 10 instruments, October 2026
+## The tape, October 2026
 
 All figures from the 2026-10-10 snapshot (scripts/metrics.py). On-chain T-bill benchmark: Midas mTBILL, 3.73% (July: 3.12%). Grades in Issue #1 are **baseline grades only**. DRIFT is a trend verdict that requires a prior issue to drift *from*, so it is unavailable until Issue #2. The July column is a pre-launch reference pull, shown as fact, not as a graded baseline.
 
-| # | Instrument | Platform / manager | TVL Oct (Jul) | APY | Spread vs mTBILL | Draft grade |
+| # | Instrument | Platform / manager | TVL Oct (Jul) | APY | Spread vs mTBILL | Grade |
 |---|-----------|--------------------|-----|-----|------------------|-------------|
 | 1 | syrupUSDC pool | Maple | $2,820M ($3,186M) | 5.21% | +148bp | WATCH |
 | 2 | syrupUSDT pool | Maple | $682M ($1,048M) | 5.53% | +180bp | WATCH |
-| 3 | USDS vault | Centrifuge (Sky allocation) | $326M ($871M) | 3.63% | **−10bp** | [Kaï: July draft CLEAN; see quick notes] |
+| 3 | USDS vault | Centrifuge (Sky allocation) | $326M ($871M) | 3.63% | **−10bp** | WATCH |
 | 4 | AUSD vault | Centrifuge | [TBD] ($371M) | [TBD] | [TBD] | [TBD] |
 | 5 | STAC (AAA CLO fund) | Securitize | $104M ($102M) | 3.49% | **−24bp** | WATCH |
 | 6 | ACRED / sACRED | Apollo / Securitize | $79.5M on-chain ($96.7M) | [TBD]ᵃ | [TBD] | WATCH |
 | 7 | mF-ONE | Midas / Fasanara | $65.8M ($72.6M) | 7.60% | +387bp | WATCH |
-| 8 | Goldfinch Prime | Goldfinch | [TBD] ($37M) | [TBD] | [TBD] | [TBD] |
+| 8 | Goldfinch Prime | Goldfinch | Wound down ($37M) | — | — | Exits the tape |
 | 9 | Huma V2 (PayFi) | Huma | [TBD] ($187M) | 7.62% (Morpho mkt) | +389bp | CLEAN |
 | 10 | Maple USDG pool | Maple | $503M ($99M) | 4.95% | +122bp | CLEAN |
 
 ᵃ DefiLlama lists ACRED at 0.00% on every chain in this pull; zero-APY listings are excluded per our footnote convention.
 
-[Kaï, before publishing: rows 4, 8 and 9 have no October figure from our source. Centrifuge AUSD and Goldfinch Prime are absent from DefiLlama's yields feed, and Huma V2 is absent from its protocol list. That is a source gap, not evidence of an exit. Two-source rule: confirm each on the platform's own app or rwa.xyz, then fill or swap the row under the universe rule. If a row is swapped, the largest new candidates in the feed are Centrifuge USAT on Ethereum ($296M, 6.28%) and Centrifuge USDC on Avalanche ($263M, 6.28%). The universe pick is yours.]
+**Tape changes:** Goldfinch Prime exits. Goldfinch token holders passed GIP-87 in June 2026, putting the protocol in maintenance mode and winding Prime down, with existing Prime investors fully redeemed (Goldfinch governance forum; The Block, June 2026). A replacement enters only at the next issue boundary, per the universe rule.
+
+[Kaï, before publishing: Centrifuge AUSD (row 4) has no October figure from our source and none turned up in a web search. That is a source gap, not evidence of an exit. Confirm it on the Centrifuge app or rwa.xyz, then fill the row or drop it to a tape-changes note. Huma V2's total (row 9) is also unconfirmed; the row stands on the Morpho market figure.]
 
 CLEAN means: no anomaly surfaced under this issue's five lenses at current disclosure depth. It is not an endorsement; disclosure depth varies widely.
 
@@ -55,7 +57,7 @@ Apollo's tokenized Diversified Credit feeder holds $79.5M on-chain across **six 
 - **The mismatch:** the underlying is an interval fund, so redemptions are periodic tenders. The borrowing on top is liquidatable continuously. If positions sour, the liquidator receives an asset it cannot promptly redeem. That question was raised publicly at launch and, per available disclosure, still has no published backstop. [TBD: current Gauntlet vault parameters and liquidation-buyer arrangements — Dune + Gauntlet docs.]
 - **The fragmentation angle:** six chains means six oracle deployments and six liquidity surfaces for one NAV.
 
-**Draft grade: WATCH.** Structure, not manager. Apollo's underlying book is not the question; the wrapper's stress mechanics are.
+**Grade: WATCH.** Structure, not manager. Apollo's underlying book is not the question; the wrapper's stress mechanics are.
 
 ### 2. STAC: when a AAA CLO fund prints below T-bills, check the oracle before the credit
 
@@ -65,7 +67,7 @@ The Securitize tokenized AAA CLO fund prints 3.49%, **24bp below the on-chain T-
 - **Why it's still a finding:** a routine metrics API has now produced a below-risk-free print for a AAA instrument in two pulls three months apart, and nothing in the disclosure stack flags it. NAV observability, not asset quality, is the weak layer. An allocator screening on published APY would wrongly exclude the fund, or stop trusting the category's numbers.
 - **What resolves it:** NAV timestamp history against price-feed history. [TBD Issue #2: the fund's oracle update log — a two-hour Dune job.]
 
-**Draft grade: WATCH.** A data-integrity watch, explicitly not a credit watch. We flag anomalies; we don't speculate on causes we haven't verified.
+**Grade: WATCH.** A data-integrity watch, explicitly not a credit watch. We flag anomalies; we don't speculate on causes we haven't verified.
 
 ### 3. mF-ONE: the spread compressed, the disclosure questions didn't
 
@@ -75,13 +77,13 @@ Fasanara's mF-ONE via Midas: $65.8M at 7.60%, +387bp over T-bills. In July: $72.
 - **What the spread buys you the right to ask:** loan count, top-10 borrower concentration, weighted average life against the token's redemption terms, delinquency roll rates. Fasanara publishes more than most; the question is whether on-chain disclosure keeps pace with off-chain fund reporting. [TBD: side-by-side of Midas on-chain disclosures vs. the Fasanara factsheet.]
 - **What moved:** the headline yield fell 525bp in three months while TVL fell 9%. The pull doesn't say why. [TBD: Fasanara fund reporting on the yield change.]
 
-**Draft grade: WATCH.** A disclosure-depth watch. Sharpens if TVL grows >50% before the questions above are answerable from public sources.
+**Grade: WATCH.** A disclosure-depth watch. Sharpens if TVL grows >50% before the questions above are answerable from public sources.
 
 ---
 
 ## Quick notes on the rest of the tape
 
-- **Centrifuge USDS ($326M, down from $871M):** the July draft graded this CLEAN, with a caveat that a single-allocator base (Sky) is a redemption-concentration fact worth pricing. The tape since then shows the allocation down 63% and the APY now 10bp below the T-bill benchmark. Both are facts from the pull, not a cause; the pull doesn't show whose capital left. [Kaï: grade call. The concentration caveat played out on the tape; whether that is CLEAN-with-note or WATCH is yours.]
+- **Centrifuge USDS ($326M, down from $871M):** the July draft graded this CLEAN, with a caveat that a single-allocator base (Sky) is a redemption-concentration fact worth pricing. The tape since then shows the allocation down 63% and the APY now 10bp below the T-bill benchmark. Both are facts from the pull, not a cause; the pull doesn't show whose capital left. **Grade: WATCH.** A concentration and observability watch, not a credit watch. What resolves it: a published account of the allocation change, and the vault's yield back above the T-bill benchmark in a later pull.
 - **Maple USDG ($503M, up from $99M):** a fivefold increase in three months. Standard Maple underwriting posture. CLEAN at baseline; growth this fast is worth a note in Issue #2's tape changes.
 - **Huma V2:** the Morpho HUMAUSDC market is $12.8M at 7.62% (July: $15.8M at 4.48%) and bears watching only as a rehypothecation seed. [TBD: Huma V2 total from a second source.]
 
