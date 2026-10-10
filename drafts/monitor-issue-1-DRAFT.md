@@ -35,8 +35,8 @@ All figures from the 2026-10-10 snapshot (scripts/metrics.py). On-chain T-bill b
 | 7 | Huma V2 (PayFi) | Huma | $401Mᶜ ($187M) | 7.62% (Morpho mkt) | +389bp | CLEAN |
 | 8 | Maple USDG pool | Maple | $503M ($99M) | 4.95% | +122bp | CLEAN |
 
-ᵃ New addition to the Tapewatch; APY and spread to follow. DefiLlama lists ACRED at 0.00% on every chain in this pull; zero-APY listings are excluded per our footnote convention.
-ᵇ New addition to the Tapewatch; APY and spread to follow. Sources disagree on yield: DefiLlama lists 6.28%; rwa.xyz shows a 30-day APY of 3.06%. TVL agrees across both: $592M (DefiLlama, sum of Centrifuge share classes) and $589M (rwa.xyz, 2026-10-10).
+ᵃ Yield not yet tracked. DefiLlama lists ACRED at 0.00% on every chain in this pull; zero-APY listings are excluded per our footnote convention.
+ᵇ Yield not yet tracked. Sources disagree on yield: DefiLlama lists 6.28%; rwa.xyz shows a 30-day APY of 3.06%. TVL agrees across both: $592M (DefiLlama, sum of Centrifuge share classes) and $589M (rwa.xyz, 2026-10-10).
 ᶜ DefiLlama protocol TVL, 2026-10-10; Huma V2 no longer appears in DefiLlama's full protocol list, so this is a direct lookup. Single source.
 
 **Tape changes:** two instruments from the July draft are not on this tape. **Goldfinch Prime** was wound down. Goldfinch token holders passed GIP-87 in June 2026, putting the protocol in maintenance mode and winding Prime down, with existing Prime investors fully redeemed (Goldfinch governance forum; The Block, June 2026). **JTRSY**, the Janus Henderson Treasury fund the July draft listed as "Centrifuge USDS vault," is a tokenized Treasury fund and falls outside the credit universe rule. (It is down 55% in the last 30 days per rwa.xyz, to $345M.)
