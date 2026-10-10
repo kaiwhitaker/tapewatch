@@ -1,6 +1,6 @@
 # The Tokenized Credit Monitor — Issue #1
 
-**[DRAFT v2, refreshed 2026-10-10. Grades signed off by Kaï on 2026-10-10. Open before publishing: the AUSD row. Data: 2026-10-10 snapshot, compared against the 2026-07-05 reference pull; both committed in data/snapshots/, every figure from scripts/metrics.py. The July draft (v1) is in git history.]**
+**[DRAFT v2, refreshed 2026-10-10. Grades signed off by Kaï on 2026-10-10, except rows 3 and 4, which were relabeled after sign-off and need his call. Data: 2026-10-10 snapshot, compared against the 2026-07-05 reference pull; both committed in data/snapshots/, every figure from scripts/metrics.py. The July draft (v1) is in git history.]**
 
 *Surveillance for tokenized private credit. Free, monthly, methodology in the appendix. We watch the tape so you don't have to reconcile it at 2am.*
 
@@ -28,8 +28,8 @@ All figures from the 2026-10-10 snapshot (scripts/metrics.py). On-chain T-bill b
 |---|-----------|--------------------|-----|-----|------------------|-------------|
 | 1 | syrupUSDC pool | Maple | $2,820M ($3,186M) | 5.21% | +148bp | WATCH |
 | 2 | syrupUSDT pool | Maple | $682M ($1,048M) | 5.53% | +180bp | WATCH |
-| 3 | USDS vault | Centrifuge (Sky allocation) | $326M ($871M) | 3.63% | **−10bp** | WATCH |
-| 4 | AUSD vault | Centrifuge | [TBD] ($371M) | [TBD] | [TBD] | [TBD] |
+| 3 | JTRSY (Treasury fund; USDS share class) | Janus Henderson / Centrifuge | $326M ($871M) | 3.63% | −10bp | [Kaï: re-decide; T-bill fund, see note] |
+| 4 | JAAA (AAA CLO fund) | Janus Henderson / Centrifuge | $592M across share classes ($690M) | [TBD]ᵇ | [TBD] | [Kaï: grade] |
 | 5 | STAC (AAA CLO fund) | Securitize | $104M ($102M) | 3.49% | **−24bp** | WATCH |
 | 6 | ACRED / sACRED | Apollo / Securitize | $79.5M on-chain ($96.7M) | [TBD]ᵃ | [TBD] | WATCH |
 | 7 | mF-ONE | Midas / Fasanara | $65.8M ($72.6M) | 7.60% | +387bp | WATCH |
@@ -38,10 +38,11 @@ All figures from the 2026-10-10 snapshot (scripts/metrics.py). On-chain T-bill b
 | 10 | Maple USDG pool | Maple | $503M ($99M) | 4.95% | +122bp | CLEAN |
 
 ᵃ DefiLlama lists ACRED at 0.00% on every chain in this pull; zero-APY listings are excluded per our footnote convention.
+ᵇ Sources disagree: DefiLlama lists 6.28%; rwa.xyz shows a 30-day APY of 3.06%. TVL agrees across both: $592M (DefiLlama, sum of Centrifuge share classes) and $589M (rwa.xyz, 2026-10-10).
 
 **Tape changes:** Goldfinch Prime exits. Goldfinch token holders passed GIP-87 in June 2026, putting the protocol in maintenance mode and winding Prime down, with existing Prime investors fully redeemed (Goldfinch governance forum; The Block, June 2026). A replacement enters only at the next issue boundary, per the universe rule.
 
-[Kaï, before publishing: Centrifuge AUSD (row 4) has no October figure from our source and none turned up in a web search. That is a source gap, not evidence of an exit. Confirm it on the Centrifuge app or rwa.xyz, then fill the row or drop it to a tape-changes note. Huma V2's total (row 9) is also unconfirmed; the row stands on the Morpho market figure.]
+[Kaï, before publishing: rows 3 and 4 were mislabeled in the July draft by their settlement stablecoin. DefiLlama's poolMeta and rwa.xyz both identify them as Janus Henderson funds. Row 3 is JTRSY, a tokenized Treasury fund: a yield just under the T-bill benchmark is expected after fees, so the negative spread isn't a finding, and the universe rule covers credit instruments, which suggests it leaves the tape. Row 4 is JAAA, a AAA CLO fund. Its July AUSD share class ($371M) is gone; a USAT share class ($296M) appeared. Whether one replaced the other is unconfirmed. Huma V2's total (row 9) is also unconfirmed; the row stands on the Morpho market figure.]
 
 CLEAN means: no anomaly surfaced under this issue's five lenses at current disclosure depth. It is not an endorsement; disclosure depth varies widely.
 
@@ -83,7 +84,7 @@ Fasanara's mF-ONE via Midas: $65.8M at 7.60%, +387bp over T-bills. In July: $72.
 
 ## Quick notes on the rest of the tape
 
-- **Centrifuge USDS ($326M, down from $871M):** the July draft graded this CLEAN, with a caveat that a single-allocator base (Sky) is a redemption-concentration fact worth pricing. The tape since then shows the allocation down 63% and the APY now 10bp below the T-bill benchmark. Both are facts from the pull, not a cause; the pull doesn't show whose capital left. **Grade: WATCH.** A concentration and observability watch, not a credit watch. What resolves it: a published account of the allocation change, and the vault's yield back above the T-bill benchmark in a later pull.
+- **JTRSY ($326M in the USDS share class, down from $871M):** a tokenized Treasury fund, not credit. rwa.xyz shows its total down 55% in the last 30 days, to $345M. The pull doesn't show whose capital left. [Kaï: grade or drop from the tape; see the note under the table.]
 - **Maple USDG ($503M, up from $99M):** a fivefold increase in three months. Standard Maple underwriting posture. CLEAN at baseline; growth this fast is worth a note in Issue #2's tape changes.
 - **Huma V2:** the Morpho HUMAUSDC market is $12.8M at 7.62% (July: $15.8M at 4.48%) and bears watching only as a rehypothecation seed. [TBD: Huma V2 total from a second source.]
 
