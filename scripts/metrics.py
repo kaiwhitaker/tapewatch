@@ -2,7 +2,7 @@
 """Named metric functions for the Monitor. RULE (lesson 2026-07-05): every
 number printed in an issue comes from a function here — no ad-hoc calcs.
 Usage: python3 scripts/metrics.py   (reads newest snapshot; compares to prior)"""
-import json, pathlib
+import gzip, json, pathlib
 
 SNAP = pathlib.Path(__file__).resolve().parents[1] / "data" / "snapshots"
 BENCHMARK_SYMBOL = "MTBILL"      # on-chain T-bill proxy
@@ -15,12 +15,14 @@ UNIVERSE_PROJECTS = [            # keep in sync with methodology.md universe rul
 ]  # morpho-blue excluded: its curated vaults are crypto-collateral lending, not
    # tokenized private credit (universe-rule bug caught in first run, 2026-07-05)
 
-def load(name, offset=0):
-    files = sorted(SNAP.glob(f"*-{name}.json"))
+def load(name, offset=0, snap=SNAP):
+    # Snapshots are .json (2026-07-05) or .json.gz (fetch.py since 2026-10).
+    files = sorted(snap.glob(f"*-{name}.json*"), key=lambda f: f.name[:10])
     if len(files) <= offset:
         return None, None
     f = files[-(1 + offset)]
-    data = json.loads(f.read_text())
+    raw = gzip.decompress(f.read_bytes()) if f.suffix == ".gz" else f.read_bytes()
+    data = json.loads(raw)
     return (data.get("data", data)), f.name[:10]
 
 def benchmark_apy(pools):

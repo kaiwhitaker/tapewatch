@@ -24,6 +24,8 @@ see protocols/permissions.md).
 - sessions/ — prompt templates for ops/scout/scorecard/lesson.
 - scripts/ — fetch.py, metrics.py, lint.py. Every Monitor number comes from a
   named function in metrics.py. No ad-hoc calcs.
-- data/snapshots/ — timestamped raw API pulls. Commit every snapshot; this IS
-  the time series the DRIFT verdict depends on.
+- data/snapshots/ — timestamped raw API pulls (gzipped since 2026-10). Commit
+  every snapshot; this IS the time series the DRIFT verdict depends on.
+  .github/workflows/snapshot.yml pulls and commits one every Monday; run it by
+  hand from the Actions tab before an issue.
 - drafts/ — Monitor issues and outreach awaiting Kaï's edit/send.
