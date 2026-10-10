@@ -75,13 +75,16 @@ def anomalies(pools, prev_pools=None):
         if ratio > 0.10:
             out.append(f"REHYPO >10%: {ratio:.1%} of {REHYPO_HOME_PROJECT} stable pools redeposited elsewhere")
     if prev_pools:
-        prev = {(p["project"], p["symbol"], p["chain"]): p["tvlUsd"] for p in prev_pools}
+        # Key on DefiLlama's pool id: project/symbol/chain isn't unique (two
+        # Centrifuge USDC pools on Base share it), which compared the wrong pools.
+        prev = {p["pool"]: p["tvlUsd"] for p in prev_pools}
         for p in universe_rows(pools):
-            k = (p["project"], p["symbol"], p["chain"])
+            k = p["pool"]
             if k in prev and prev[k] > 1e6:
                 d = (p["tvlUsd"] - prev[k]) / prev[k]
                 if abs(d) > 0.30:
-                    out.append(f"TVL MOVE {d:+.0%}: {'/'.join(k)} (${prev[k]:,.0f} -> ${p['tvlUsd']:,.0f})")
+                    name = f"{p['project']}/{p['symbol']}/{p['chain']}"
+                    out.append(f"TVL MOVE {d:+.0%}: {name} [{k[:8]}] (${prev[k]:,.0f} -> ${p['tvlUsd']:,.0f})")
     return out
 
 def main():
