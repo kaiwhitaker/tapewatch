@@ -1,0 +1,41 @@
+# Weekly DeFiLlama snapshot. The committed snapshot series is the evidence
+# base for DRIFT verdicts, and a week that isn't pulled can't be recovered.
+name: Weekly snapshot
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"   # Mondays 06:17 UTC, before morning ops
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch snapshot
+        run: python3 scripts/fetch.py
+
+      - name: Commit snapshot
+        run: |
+          git add data/snapshots
+          if git diff --cached --quiet; then
+            echo "No new snapshot to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: weekly snapshot $(date -u +%F)"
+          git push
+
+      # After the commit, so a metrics bug can't cost a week of data.
+      - name: Check metrics read the new snapshot
+        run: python3 scripts/metrics.py

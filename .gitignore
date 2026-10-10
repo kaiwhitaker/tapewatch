@@ -1,3 +1,4 @@
 
 # software-factory task worktrees
 .worktrees/
+__pycache__/
