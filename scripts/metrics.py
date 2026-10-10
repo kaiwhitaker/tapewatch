@@ -5,7 +5,11 @@ Usage: python3 scripts/metrics.py   (reads newest snapshot; compares to prior)""
 import gzip, json, pathlib
 
 SNAP = pathlib.Path(__file__).resolve().parents[1] / "data" / "snapshots"
-BENCHMARK_SYMBOL = "MTBILL"      # on-chain T-bill proxy
+BENCHMARK_SYMBOL = "MTBILL"      # on-chain T-bill proxy (label only)
+# Midas mTBILL on Ethereum, by DefiLlama pool id. Not by symbol: by 2026-10-10
+# DefiLlama relabeled every Midas listing (mTBILL now shows symbol "USDC",
+# poolMeta "mTBILL"), which silently dropped the benchmark.
+BENCHMARK_POOL = "b8d0d351-ac04-40de-9768-1fb9fdc68114"
 REHYPO_PREFIX = "SYRUP"          # tokens tracked for rehypothecation footprint
 REHYPO_HOME_PROJECT = "maple"
 UNIVERSE_PROJECTS = [            # keep in sync with methodology.md universe rule
@@ -30,10 +34,16 @@ def benchmark_apy(pools):
     over listings (bug caught in first run: max() picked a different chain's
     listing and flagged the benchmark against itself)."""
     for p in pools:
-        if (p.get("symbol") == BENCHMARK_SYMBOL and p.get("chain") == "Ethereum"
-                and p.get("project") == "midas-rwa" and (p.get("apy") or 0) > 0):
+        if p.get("pool") == BENCHMARK_POOL and (p.get("apy") or 0) > 0:
             return p["apy"]
     return None
+
+def label(p):
+    """Instrument name for display. Midas listings carry it in poolMeta since
+    DefiLlama's relabel; their symbol is now the settlement asset."""
+    if p.get("project") == "midas-rwa" and p.get("poolMeta"):
+        return p["poolMeta"]
+    return p["symbol"]
 
 def rehypo_footprint(pools):
     """$ of REHYPO_PREFIX tokens supplied inside OTHER protocols (not DEX pairs)."""
@@ -62,12 +72,15 @@ def universe_rows(pools, floor=15_000_000):
 
 def anomalies(pools, prev_pools=None):
     out, bench = [], benchmark_apy(pools)
-    if bench:
+    if bench is None:
+        out.append(f"BENCHMARK MISSING: pool {BENCHMARK_POOL[:8]} not in snapshot; "
+                   "negative-spread check skipped")
+    else:
         for p in universe_rows(pools):
-            if p.get("symbol") == BENCHMARK_SYMBOL:
+            if p.get("pool") == BENCHMARK_POOL:
                 continue
             if (p.get("apy") or 0) > 0 and p["apy"] < bench and p["tvlUsd"] > 50e6:
-                out.append(f"NEGATIVE SPREAD: {p['project']}/{p['symbol']} "
+                out.append(f"NEGATIVE SPREAD: {p['project']}/{label(p)} "
                            f"{p['apy']:.2f}% vs benchmark {bench:.2f}% (NAV-observability flag)")
     home = home_pool_tvl(pools)
     if home:
@@ -75,13 +88,16 @@ def anomalies(pools, prev_pools=None):
         if ratio > 0.10:
             out.append(f"REHYPO >10%: {ratio:.1%} of {REHYPO_HOME_PROJECT} stable pools redeposited elsewhere")
     if prev_pools:
-        prev = {(p["project"], p["symbol"], p["chain"]): p["tvlUsd"] for p in prev_pools}
+        # Key on DefiLlama's pool id: project/symbol/chain isn't unique (two
+        # Centrifuge USDC pools on Base share it), which compared the wrong pools.
+        prev = {p["pool"]: p["tvlUsd"] for p in prev_pools}
         for p in universe_rows(pools):
-            k = (p["project"], p["symbol"], p["chain"])
+            k = p["pool"]
             if k in prev and prev[k] > 1e6:
                 d = (p["tvlUsd"] - prev[k]) / prev[k]
                 if abs(d) > 0.30:
-                    out.append(f"TVL MOVE {d:+.0%}: {'/'.join(k)} (${prev[k]:,.0f} -> ${p['tvlUsd']:,.0f})")
+                    name = f"{p['project']}/{label(p)}/{p['chain']}"
+                    out.append(f"TVL MOVE {d:+.0%}: {name} [{k[:8]}] (${prev[k]:,.0f} -> ${p['tvlUsd']:,.0f})")
     return out
 
 def main():
@@ -100,7 +116,7 @@ def main():
     print(f"\n-- universe (>=15M, APY>0) --")
     for p in universe_rows(pools)[:15]:
         sp = f"{(p['apy']-bench)*100:+.0f}bp" if bench else "n/a"
-        print(f"{p['project'][:38]:38s} {p['symbol']:10s} {p['chain']:10s} "
+        print(f"{p['project'][:38]:38s} {label(p):10s} {p['chain']:10s} "
               f"${p['tvlUsd']/1e6:8.1f}M  {p['apy']:6.2f}%  {sp}")
     print(f"\n-- auto-flagged anomalies --")
     for a in anomalies(pools, prev) or ["(none)"]:

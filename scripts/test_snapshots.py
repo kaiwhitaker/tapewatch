@@ -44,5 +44,42 @@ class SaveLoadTest(unittest.TestCase):
         self.assertEqual((newest[0]["tag"], stamp), ("new", "2026-10-12"))
         self.assertEqual((prior[0]["tag"], prior_stamp), ("old", "2026-07-05"))
 
+class AnomaliesTest(unittest.TestCase):
+    # Two real Centrifuge pools share project/symbol/chain (2026-07-05 data).
+    POOLS = [
+        {"pool": "82469f6f", "project": "centrifuge-protocol", "symbol": "USDC",
+         "chain": "Base", "tvlUsd": 50_133_606, "apy": 5.0},
+        {"pool": "61813eeb", "project": "centrifuge-protocol", "symbol": "USDC",
+         "chain": "Base", "tvlUsd": 2_222_821, "apy": 5.0},
+    ]
+
+    def tvl_moves(self, pools, prev):
+        return [a for a in metrics.anomalies(pools, prev) if a.startswith("TVL MOVE")]
+
+    def test_identical_snapshots_flag_no_tvl_move(self):
+        self.assertEqual(self.tvl_moves(self.POOLS, self.POOLS), [])
+
+    def test_real_move_is_flagged(self):
+        moved = [dict(self.POOLS[0], tvlUsd=20_000_000), self.POOLS[1]]
+        self.assertEqual(len(self.tvl_moves(moved, self.POOLS)), 1)
+
+class BenchmarkTest(unittest.TestCase):
+    # mTBILL as DefiLlama listed it on 2026-07-05 and after its 2026-10 relabel.
+    JULY = {"pool": metrics.BENCHMARK_POOL, "project": "midas-rwa", "symbol": "MTBILL",
+            "chain": "Ethereum", "tvlUsd": 52_900_464, "apy": 3.12}
+    OCT = dict(JULY, symbol="USDC", poolMeta="mTBILL", tvlUsd=74_914_755, apy=3.73)
+
+    def test_found_before_and_after_relabel(self):
+        self.assertEqual(metrics.benchmark_apy([self.JULY]), 3.12)
+        self.assertEqual(metrics.benchmark_apy([self.OCT]), 3.73)
+
+    def test_missing_benchmark_is_flagged(self):
+        self.assertTrue(any(a.startswith("BENCHMARK MISSING")
+                            for a in metrics.anomalies([])))
+
+    def test_label_uses_pool_meta_for_midas(self):
+        self.assertEqual(metrics.label(self.OCT), "mTBILL")
+        self.assertEqual(metrics.label(self.JULY), "MTBILL")
+
 if __name__ == "__main__":
     unittest.main()
